@@ -69,11 +69,13 @@ RUN tar zxvf jdk-8u212-linux-x64.tar.gz
 COPY profile /etc/profile
 RUN rm jdk-8u212-linux-x64.tar.gz
 
-### change permission for user
+### change permission and create group for user
 
-RUN chown -R root:imbduser /envs
+RUN groupadd imbduser && \
+    chown -R root:imbduser /envs && \
+    chmod -R 775 /envs
 
-WORKDIR /
+WORKDIR /envs
 
 RUN apt-get clean
 
