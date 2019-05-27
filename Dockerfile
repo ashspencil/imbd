@@ -26,21 +26,23 @@ COPY pip3 /usr/bin/pip3
 RUN pip3 install pipenv
 
 ### Build Env (Pytorch version)
-WORKDIR /root
+ENV WORKON_HOME /envs
+RUN mkdir /envs
 
+WORKDIR /envs
 RUN mkdir pytorch
 COPY pytorch_version.txt pytorch/requirements.txt
 WORKDIR pytorch
 RUN pipenv install --python 3.7
 
 ### Build Env (Tensorflow_keras version)
-WORKDIR /root
+WORKDIR /envs
 RUN mkdir tf_keras
 COPY tf_keras_version.txt tf_keras/requirements.txt
 WORKDIR tf_keras
 RUN pipenv install --python 3.7
 
-WORKDIR /root
+WORKDIR /envs
 RUN rm -rf .cache
 
 ### R for 3.4.4
@@ -59,17 +61,19 @@ RUN cp apt_pkg.cpython-35m-x86_64-linux-gnu.so apt_pkg.so && \
     add-apt-repository "deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/" && \
     apt-get update -y && \
     apt-get -y install r-base=3.4.4-1xenial0
-                                                                
-WORKDIR /root
 
 ### oracle JAVA 8
 COPY jdk-8u212-linux-x64.tar.gz /opt
 WORKDIR /opt
-RUN tar zxvf jdk-8u212-linux-x64.tar.gz && \
-    echo "export JAVA_HOME=/opt/jdk1.8.0_212" >> /etc/profile && \
-    echo "export JRE_HOME=/opt/jdk1.8.0_212/jre"
+RUN tar zxvf jdk-8u212-linux-x64.tar.gz
+COPY profile /etc/profile
 RUN rm jdk-8u212-linux-x64.tar.gz
-WORKDIR /root
+
+### change permission for user
+
+RUN chown -R root:imbduser /envs
+
+WORKDIR /
 
 RUN apt-get clean
 
