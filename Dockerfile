@@ -78,6 +78,13 @@ ENV JRE_HOME=${JAVA_HOME}/jre
 ENV CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 ENV PATH=${JAVA_HOME}/bin:$PATH
 COPY profile /etc/profile
+
+### R packages
+RUN R CMD javareconf
+RUN apt-get install ocl-icd-opencl-dev libxml2-dev libgmp3-dev opencl-headers libssl-dev -y
+RUN ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/libOpenCL.so
+RUN Rscript -e "install.packages(c('xgboost', 'readxl', 'xlsx', 'tidyverse', 'klaR', 'ClusterR', 'pracma', 'fields', 'filehashSQLite', 'filehash', 'LatticeKrig', 'spam', 'RSpectra', 'filematrix', 'autoFRK', 'Metrics', 'adabag', 'neuralnet', 'caTools', 'nnet', 'caret', 'ada', 'randomForest', 'inTrees', 'UBL', 'cvTools', 'gdata', 'moments', 'zoo', 'parcor', 'MASS', 'chemometrics', 'rpart', 'e1071'))"
+
 ### change permission and create group for user
 
 RUN groupadd imbduser && \
