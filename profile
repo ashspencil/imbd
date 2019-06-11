@@ -31,3 +31,4 @@ export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 export PATH=/usr/local/cuda-10.0/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
+export WORKON_HOME=/envs

@@ -89,7 +89,7 @@ RUN Rscript -e "install.packages(c('xgboost', 'readxl', 'xlsx', 'tidyverse', 'kl
 
 RUN groupadd imbduser && \
     chown -R root:imbduser /envs && \
-    chmod -R 775 /envs
+    chmod -R 770 /envs
 
 WORKDIR /envs
 
