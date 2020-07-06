@@ -31,6 +31,10 @@ RUN pip3 install pipenv
 ENV WORKON_HOME /envs
 RUN mkdir /envs
 
+
+ENV PIPENV_TIMEOUT 9999
+ENV PIPENV_INSTALL_TIMEOUT 9999
+
 WORKDIR /envs
 RUN mkdir pytorch
 COPY pytorch_version.txt pytorch/requirements.txt
@@ -48,20 +52,10 @@ RUN pipenv install --python 3.7 && \
 
 WORKDIR /envs
 
-### R for 3.4.4
-RUN apt-get update -y && \
-    apt-get install -y build-essential fort77 xorg-dev liblzma-dev  libblas-dev gfortran gcc-multilib gobjc++ aptitude && \
-    aptitude install -y libreadline-dev && \
-    aptitude install -y libcurl4-openssl-dev && \
-    apt-get install -y texlive-latex-base libcairo2-dev  && \
-    apt-get install -y apt-transport-https && \
-    apt-get install -y software-properties-common && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
-    apt-get clean
-                                            
-WORKDIR /usr/lib/python3/dist-packages/
+### R for 4.0.1
 
-RUN sed -i 's/python3/python3.6/g' /usr/bin/add-apt-repository && \
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+    sed -i 's/python3/python3.6/g' /usr/bin/add-apt-repository && \
     add-apt-repository "deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu bionic-cran40/" && \
     apt-get update -y && \
     apt-get -y install r-base=4.0.1-1.1804.0 && \
