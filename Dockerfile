@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 MAINTAINER ashspencil <pencil302@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -58,7 +58,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD5
     sed -i 's/python3/python3.6/g' /usr/bin/add-apt-repository && \
     add-apt-repository "deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu bionic-cran40/" && \
     apt-get update -y && \
-    apt-get -y install r-base=4.0.1-1.1804.0 && \
+    apt-get -y install r-recommended=4.0.1-1.1804.0 r-base=4.0.1-1.1804.0 && \
     apt-get clean
 
 ### oracle JAVA 8
