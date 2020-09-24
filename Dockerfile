@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 MAINTAINER ashspencil <pencil302@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -30,7 +30,6 @@ RUN pip3 install pipenv
 ### Build Env (Pytorch version)
 ENV WORKON_HOME /envs
 RUN mkdir /envs
-
 
 ENV PIPENV_TIMEOUT 9999
 ENV PIPENV_INSTALL_TIMEOUT 9999
